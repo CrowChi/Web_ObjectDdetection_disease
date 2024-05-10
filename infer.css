@@ -1,0 +1,177 @@
+    .input {
+        border-width: 1px;
+        border-color: #fd8700 100%, 50%;
+        border-radius: 0.25rem;
+        height: 2.5rem;
+        width: 100%;
+        padding-left: 0.5rem;
+        padding-right: 0.5rem;
+    }
+
+    .input--left {
+        border-top-right-radius: 0;
+        border-bottom-right-radius: 0;
+        margin-right: 0;
+    }
+
+    .input__icon {
+        padding-left: 2.5rem;
+        padding-right: 2.5rem;
+    }
+
+    .input__label {
+        margin-bottom: 0.5rem;
+        display: block;
+        color: #1e7e34;
+    }
+    .bttn {
+        padding-top: 0.5rem;
+        padding-bottom: 0.5rem;
+        padding-left: 0.75rem;
+        padding-right: 0.75rem;
+        background-color: #fd8700 100%, 50%;
+        border-width: 1px;
+        border-color: #fd8700 100%, 50%;
+        margin-right: -0.5rem;
+        height: 2.5rem;
+    }
+
+    .bttn.fill {
+        width: 50%;
+    }
+
+    .bttn:focus {
+        outline: 1px dotted;
+    }
+
+    .bttn:hover {
+        background-color: #fd8700 100%, 50%;
+    }
+
+    .bttn.active {
+        background-color: #fd8700 100%, 50%;
+        color: #fd8700 100%, 50%;
+        border-width: 1px;
+        border-color: #fd8700 100%, 50%;
+    }
+
+    .bttn__primary {
+        background-color: #fd8700 100%, 50%;
+        color: #fd8700 100%, 50%;
+        border-width: 1px;
+        border-color: #fd8700 100%, 50%;
+        border-radius: 0.25rem;
+        font-size: 1.125rem;
+        padding-left: 1.25rem;
+        padding-right: 1.25rem;
+        padding-top: 0.75rem;
+        padding-bottom: 0.75rem;
+        text-align: center;
+    }
+
+    .bttn.active:hover,
+    .bttn__primary:hover {
+        background-color: #fd8700 100%, 50%;
+    }
+    .result {
+        max-width: 56rem;
+    }
+
+    .result__header {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 1rem;
+    }
+
+    .divider {
+        border-width: 1px;
+        border-color: #fd8700 100%, 50%;
+        margin-top: 2.5rem;
+        margin-bottom: 2.5rem;
+        height: 0;
+    }
+
+/* ตัวอย่างการปรับแต่งเพิ่มเติม */
+.container {
+    border: 2px solid #3498db; /* สีขอบกรอบ */
+    border-radius: 20px; /* ความโค้งขอบกรอบ */
+    background-color: #ecf0f1; /* สีพื้นหลังกรอบ */
+    box-shadow: 0 0 25px rgba(0, 0, 0, 0.2); /* เงากรอบ */
+}
+
+body {
+    background-image: url('https://scontent.fbkk5-3.fna.fbcdn.net/v/t1.15752-9/430853963_808985401058230_577631216584243296_n.png?_nc_cat=105&ccb=1-7&_nc_sid=5f2048&_nc_eui2=AeFe7ax17vvCCOZ9jikrX3GjQCp_QHwSpzlAKn9AfBKnObKFGUN2VpHUwZTxYdTI0UTM9CJIhNFhhPwXa50Jrqqh&_nc_ohc=z_lCxZ4lsygQ7kNvgFD8tJm&_nc_ht=scontent.fbkk5-3.fna&oh=03_Q7cD1QFJIamjoIqW4_4ZWO5KlnumjzX1vwtAaxxxq-frSILW_w&oe=6659EC58');
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+    margin: 0;
+    padding: 0;
+    font-family: 'Inter', sans-serif;
+    line-height: 1.6;
+    color: #333; /* สีข้อความ */
+    display: grid;
+    place-items: center;
+    height: 100vh;
+}
+.content {
+    max-width: 600px; /* กำหนดความกว้างสูงสุดของกรอบ Inference */
+    margin: auto; /* จัดให้กรอบอยู่ตรงกลางของหน้าจอ */
+    
+    border: 2px solid #fd8700; /* สีขอบกรอบ Inference */
+    border-radius: 10px; /* ความโค้งขอบกรอบ Inference */
+    background-color: #fff; /* สีพื้นหลังของกรอบ Inference */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* เงากรอบ Inference */
+}
+.result {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.col-12-m8 {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.header__logo  {
+    max-width: 600px; /* กำหนดความกว้างสูงสุดของกรอบ Inference */
+    margin: auto; /* จัดให้กรอบอยู่ตรงกลางของหน้าจอ */
+    border: 2px solid #fd8700; /* สีขอบกรอบ Inference */
+    border-radius: 10px; /* ความโค้งขอบกรอบ Inference */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* เงากรอบ Inference */
+}
+/* For mobile phones: */
+[class*="col-"] {
+    width: 100%;
+  }
+  
+  @media only screen and (min-width: 600px) {
+    /* For tablets: */
+    .col-s-1 {width: 8.33%;}
+    .col-s-2 {width: 16.66%;}
+    .col-s-3 {width: 25%;}
+    .col-s-4 {width: 33.33%;}
+    .col-s-5 {width: 41.66%;}
+    .col-s-6 {width: 50%;}
+    .col-s-7 {width: 58.33%;}
+    .col-s-8 {width: 66.66%;}
+    .col-s-9 {width: 75%;}
+    .col-s-10 {width: 83.33%;}
+    .col-s-11 {width: 91.66%;}
+    .col-s-12 {width: 100%;}
+  }
+  
+  @media only screen and (min-width: 768px) {
+    /* For desktop: */
+    .col-1 {width: 8.33%;}
+    .col-2 {width: 16.66%;}
+    .col-3 {width: 25%;}
+    .col-4 {width: 33.33%;}
+    .col-5 {width: 41.66%;}
+    .col-6 {width: 50%;}
+    .col-7 {width: 58.33%;}
+    .col-8 {width: 66.66%;}
+    .col-9 {width: 75%;}
+    .col-10 {width: 83.33%;}
+    .col-11 {width: 91.66%;}
+    .col-12 {width: 100%;}
+  }

@@ -146,35 +146,34 @@ var infer = function() {
 		$.ajax(settings).then(function(response) {
     if (settings.format == "json") {
         var partialResponse;
-
         if (response.predictions[0].class === "canker") {
             // สร้างอ็อบเจ็กต์ JSON สำหรับ class "canker" เท่านั้น
             partialResponse = {
                 // กำหนดเฉพาะ key ที่ต้องการแสดงข้อมูล
                 "class": response.predictions[0].class,
                 "links": {
-                    "canker": "<a href=' https://www.24oranges.com/โรคแคงเกอร์/'>วิธีรักษา</a>"
+                    "canker": "<a href=' https://www.24oranges.com/โรคแคงเกอร์/'>กด -> วิธีรักษา</a>"
                 }
             };
         } else if (response.predictions[0].class === "greening") {
             partialResponse = {
                 "class": response.predictions[0].class,
                 "links": {
-                    "greening": "<a href='https://www.24oranges.com/โรคกรีนนิ่ง/'>วิธีรักษา</a>"
+                    "greening": "<a href='https://www.24oranges.com/โรคกรีนนิ่ง/'>กด -> วิธีรักษา</a>"
                 }
             };
         } else if (response.predictions[0].class === "blackspot") {
             partialResponse = {
                 "class": response.predictions[0].class,
                 "links": {
-                    "blackspot": "<a href='https://www.24oranges.com/โรคราดำ/'>วิธีรักษา</a>"
+                    "blackspot": "<a href='https://www.24oranges.com/โรคราดำ/'>กด -> วิธีรักษา</a>"
                 }
             };
         } else {
             partialResponse = {
                 "class": response.predictions[0].class,
                 "links": {
-                    "melanose": "<a href=' https://www.24oranges.com/โรคเมลาโนส/'>วิธีรักษา</a>"
+                    "melanose": "<a href=' https://www.24oranges.com/โรคเมลาโนส/'>กด -> วิธีรักษา</a>"
                 }
             };
         }
@@ -185,6 +184,7 @@ var infer = function() {
         pretty.html(formatted);
         $('#output').html("").append(pretty);
         $('html').scrollTop(100000);
+		
     } else {
         var arrayBufferView = new Uint8Array(response);
         var blob = new Blob([arrayBufferView], {
@@ -201,7 +201,7 @@ var infer = function() {
     }
 });
 
-	});
+});
 };
 
 var retrieveDefaultValuesFromLocalStorage = function() {

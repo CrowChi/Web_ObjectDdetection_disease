@@ -152,28 +152,28 @@ var infer = function() {
                 // กำหนดเฉพาะ key ที่ต้องการแสดงข้อมูล
                 "class": response.predictions[0].class,
                 "links": {
-                    "canker": "<a href=' https://www.24oranges.com/โรคแคงเกอร์/'>กด -> วิธีรักษา</a>"
+                    "canker": "<a href='canker.html'>กด -> วิธีรักษา</a>"
                 }
             };
         } else if (response.predictions[0].class === "greening") {
             partialResponse = {
                 "class": response.predictions[0].class,
                 "links": {
-                    "greening": "<a href='https://www.24oranges.com/โรคกรีนนิ่ง/'>กด -> วิธีรักษา</a>"
+                    "greening": "<a href='greening.html'>กด -> วิธีรักษา</a>"
                 }
             };
         } else if (response.predictions[0].class === "blackspot") {
             partialResponse = {
                 "class": response.predictions[0].class,
                 "links": {
-                    "blackspot": "<a href='https://www.24oranges.com/โรคราดำ/'>กด -> วิธีรักษา</a>"
+                    "blackspot": "<a href='blackspot.html'>กด -> วิธีรักษา</a>"
                 }
             };
         } else {
             partialResponse = {
                 "class": response.predictions[0].class,
                 "links": {
-                    "melanose": "<a href=' https://www.24oranges.com/โรคเมลาโนส/'>กด -> วิธีรักษา</a>"
+                    "melanose": "<a href='melanose.html'>กด -> วิธีรักษา</a>"
                 }
             };
         }

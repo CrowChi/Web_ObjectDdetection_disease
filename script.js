@@ -23,10 +23,10 @@ $(function () {
             });
         });
 
-    var publishable_key = "rf_L9goadrZvDNebC43Qad0Qcq5OZF3";
+    var publishable_key = "BfbSf6JtKWUHQ2zXAcUj";
     var toLoad = {
-        model: "cirtus01",
-        version: 2
+        model: "dts-test-project-som",
+        version: 3
     };
 
     const loadModelPromise = new Promise(function (resolve, reject) {

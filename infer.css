@@ -217,3 +217,17 @@ body {
     margin-right: 5px;
 }
 
+.bttn__primary {
+    background-color: orange;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    text-transform: uppercase;
+}
+
+.bttn__primary:hover {
+    background-color: darkorange;
+}

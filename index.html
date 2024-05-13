@@ -56,6 +56,7 @@
                     <!-- <button data-value="url" id="goToHTML2" class="bttn right fill">เปิดกล้อง</button> -->
                 </div>
             </div>
+
 			<!-- แกล -->
             <div class="col-12-m8" id="fileSelectionContainer">
                 <label class="input__label" for="file">โหมดการใช้งาน</label>
@@ -63,11 +64,13 @@
 					<!-- display none ได้ -->
                     <input class="input input--left flex-1" type="text" id="fileName" disabled="" style="display: none;">
                     <!-- ใช้ Material Icons โดยให้เปลี่ยนชื่อ icon ตามที่ต้องการ -->
-					<button id="fileMock" class="bttn right active mb-4">
+					<button id="fileMock" class="bttn right active mb-4"onclick="showDiseaseInfo2()">
 						<i class="material-symbols-outlined">photo_library</i> <!-- ใส่ icon ของแกลลอรี่ -->
 					</button>
+					
 					<button data-value="url" id="goToHTML2" class="bttn right fill">
 						<i class="material-symbols-outlined">camera_alt</i> <!-- ใส่ icon ของกล้อง -->
+						<span></span>
 					</button>
 
                 </div>
@@ -105,15 +108,15 @@
 				<div class="col-6-m3" id="format">	
 					<label class="input__label"></label>
 					<div>
-						<button id="imageButton" data-value="image" class="bttn right active mb-4">รูปภาพ</button>
-						<button id="jsonButton" data-value="json" class="bttn right active mb-4">ข้อมูลโรค</button>
+						<button id="imageButton" data-value="image" class="bttn right active mb-4" style="display: none;">รูปภาพ</button>
+						<button id="jsonButton" data-value="json" class="bttn right active mb-4" style="display: none;">ข้อมูลโรค</button>
 					</div>
 				</div>
 				
 			<!-- submit btn -->
-            <div class="col-12">
-                <button type="submit" value="Run Inference" class="bttn__primary">วินิจฉัยโรค</button>
-            </div>
+			<div class="col-12">
+				<button type="submit" value="Run Inference" class="bttn__primary" onclick="showDiseaseInfo()">วินิจฉัยโรค</button>
+			</div>
 
         </div>
 
@@ -166,25 +169,25 @@ var infer = function() {
                 if (response.predictions[0].class === "canker") {
                     partialResponse = {
                         "วินิฉัยว่าเป็นโรค": response.predictions[0].class,
-                        "วิธีรักษา": "<a href='canker.html' class='btn-link'>กด</a>"
+                        "รายละเอียดเกี่ยวกับโรค": "<a href='canker.html' class='btn-link'>กดลิงก์</a>"
                         
                     };
                 } else if (response.predictions[0].class === "greening") {
                     partialResponse = {
                         "วินิฉัยว่าเป็นโรค": response.predictions[0].class,
-                        "กดวิธีรักษา": "<a href='greening.html' class='btn-link'>กด</a>"
+                        "รายละเอียดเกี่ยวกับโรค": "<a href='greening.html' class='btn-link'>กดลิงก์</a>"
                         
                     };
                 } else if (response.predictions[0].class === "blackspot") {
                     partialResponse = {
                         "วินิฉัยว่าเป็นโรค": response.predictions[0].class,
-                        "กดวิธีรักษา": "<a href='blackspot.html' class='btn-link'>กด</a>"
+                        "รายละเอียดเกี่ยวกับโรค": "<a href='blackspot.html' class='btn-link'>กดลิงก์</a>"
                         
                     };
                 } else {
                     partialResponse = {
                         "วินิฉัยว่าเป็นโรค": response.predictions[0].class,
-                        "กดวิธีรักษา": "<a href='melanose.html' class='btn-link'>กด</a>"
+                        "รายละเอียดเกี่ยวกับโรค": "<a href='melanose.html' class='btn-link'>กดลิงก์</a>"
                         
                     };
                 }
@@ -195,6 +198,8 @@ var infer = function() {
                 pretty.html(formatted);
                 $('#output').html("").append(pretty);
                 $('html').scrollTop(100000);
+				
+				
             } else {
                 var arrayBufferView = new Uint8Array(response);
                 var blob = new Blob([arrayBufferView], {
@@ -405,6 +410,7 @@ const button = document.getElementById('goToHTML2');
             window.location.href = 'camera.html';
         });
         
+		
 </script>
 
 <style>
@@ -421,5 +427,44 @@ const button = document.getElementById('goToHTML2');
 <a href="https://codepen.io/roboflow/pen/VwaKXdM" style="display: none;" target="_blank" id="codepenLink"><img src="https://i.imgur.com/Q1vOZ48.png"></a>
 
 <script src="/infer.e52137ed1b27e0a86d5a.js"></script>
+<script>$(document).ready(function() {
+    $('#fileMock').click(function() {
+        // เปลี่ยนโหมดการใช้งานเป็นรูปภาพ
+        $('#imageButton').trigger('click');
+    });
+
+    $('#imageButton').click(function() {
+        // ฟังก์ชันสำหรับโหมดรูปภาพ
+        switchMode('image');
+    });
+
+    $('#jsonButton').click(function() {
+        // ฟังก์ชันสำหรับโหมดข้อมูลโรค
+        switchMode('json');
+    });
+
+    $('#goToHTML2').click(function() {
+        // ฟังก์ชันสำหรับโหมด URL
+        switchMode('url');
+    });
+
+    // ฟังก์ชันสำหรับเปลี่ยนโหมดการใช้งาน
+    function switchMode(mode) {
+        if (mode === 'image') {
+            // ตรวจสอบเงื่อนไขหรือโค้ดที่ต้องการให้ทำเมื่อเป็นโหมดรูปภาพ
+            console.log('โหมดรูปภาพ');
+            // ส่วนนี้คุณสามารถเพิ่มโค้ดเพื่อแสดงรูปภาพหรือทำงานเพิ่มเติมตามต้องการ
+        }
+    }
+});
+</script>
+<script>
+    function showDiseaseInfo() {
+        document.getElementById("jsonButton").style.display = "block";
+    }
+	function showDiseaseInfo2() {
+        document.getElementById("jsonButton").style.display = "none";
+    }
+</script>
 
 </body></html>

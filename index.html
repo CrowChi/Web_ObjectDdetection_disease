@@ -43,6 +43,7 @@
     <center>
 		<div class="content">
         <div class="content__grid">
+			<div><H1>ระบบตรวจจับโรคพืชในใบส้ม</H1></div>
 			<img  class="rounded-t-lg mb-4" src="https://scontent.fbkk5-8.fna.fbcdn.net/v/t1.15752-9/398370155_382990947484800_8126688521782629395_n.jpg?_nc_cat=106&ccb=1-7&_nc_sid=5f2048&_nc_eui2=AeFcePh5CcvKWc7tL2-P-xxx_HRMsg-bf8X8dEyyD5t_xc_Ofl09XNiYAVKOUhlghA5YbSVIRR6zazAMG8FrtP5T&_nc_ohc=dzuZpiYlWuUQ7kNvgEJ2mSi&_nc_ht=scontent.fbkk5-8.fna&oh=03_Q7cD1QHqNaeB9hFxVSu-XtdaN_b3oWmNsUfvGRdPFvN1yBWEwg&oe=6659FBDB" alt="Roboflow Inference">
 
 			<!-- กล้อง -->
@@ -57,7 +58,7 @@
             </div>
 			<!-- แกล -->
             <div class="col-12-m8" id="fileSelectionContainer">
-                <label class="input__label" for="file">เลือกรูปภาพ</label>
+                <label class="input__label" for="file">โหมดการใช้งาน</label>
                 <div class="flex">
 					<!-- display none ได้ -->
                     <input class="input input--left flex-1" type="text" id="fileName" disabled="" style="display: none;">
@@ -102,7 +103,7 @@
 			
 
 				<div class="col-6-m3" id="format">	
-					<label class="input__label">เลือกผลวินิจฉัย</label>
+					<label class="input__label"></label>
 					<div>
 						<button id="imageButton" data-value="image" class="bttn right active mb-4">รูปภาพ</button>
 						<button id="jsonButton" data-value="json" class="bttn right active mb-4">ข้อมูลโรค</button>
@@ -164,31 +165,27 @@ var infer = function() {
                 var partialResponse;
                 if (response.predictions[0].class === "canker") {
                     partialResponse = {
-                        "class": response.predictions[0].class,
-                        "links": {
-                            "canker": "<a href='canker.html' class='btn-link'>กด -> วิธีรักษา</a>"
-                        }
+                        "วินิฉัยว่าเป็นโรค": response.predictions[0].class,
+                        "วิธีรักษา": "<a href='canker.html' class='btn-link'>กด</a>"
+                        
                     };
                 } else if (response.predictions[0].class === "greening") {
                     partialResponse = {
-                        "class": response.predictions[0].class,
-                        "links": {
-                            "greening": "<a href='greening.html' class='btn-link'>กด -> วิธีรักษา</a>"
-                        }
+                        "วินิฉัยว่าเป็นโรค": response.predictions[0].class,
+                        "กดวิธีรักษา": "<a href='greening.html' class='btn-link'>กด</a>"
+                        
                     };
                 } else if (response.predictions[0].class === "blackspot") {
                     partialResponse = {
-                        "class": response.predictions[0].class,
-                        "links": {
-                            "blackspot": "<a href='blackspot.html' class='btn-link'>กด -> วิธีรักษา</a>"
-                        }
+                        "วินิฉัยว่าเป็นโรค": response.predictions[0].class,
+                        "กดวิธีรักษา": "<a href='blackspot.html' class='btn-link'>กด</a>"
+                        
                     };
                 } else {
                     partialResponse = {
-                        "class": response.predictions[0].class,
-                        "links": {
-                            "melanose": "<a href='melanose.html' class='btn-link'>กด -> วิธีรักษา</a>"
-                        }
+                        "วินิฉัยว่าเป็นโรค": response.predictions[0].class,
+                        "กดวิธีรักษา": "<a href='melanose.html' class='btn-link'>กด</a>"
+                        
                     };
                 }
 

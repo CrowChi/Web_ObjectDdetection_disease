@@ -23,7 +23,7 @@ $(function () {
             });
         });
 
-    var publishable_key = "BfbSf6JtKWUHQ2zXAcUj";
+    var publishable_key = "rf_pBt50EUI1WVZI5xZ5qpljM5nDLL2";
     var toLoad = {
         model: "dts-test-project-som",
         version: 3

@@ -175,3 +175,45 @@ body {
     .col-11 {width: 91.66%;}
     .col-12 {width: 100%;}
   }
+  .btn-link {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #fe9c00;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 5px;
+}
+
+.btn-link:hover {
+    background-color: #aa5d00;
+}
+
+.material-symbols-outlined {
+  font-variation-settings:
+  'FILL' 0,
+  'wght' 400,
+  'GRAD' 0,
+  'opsz' 24
+}
+.bttn {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #ff9900;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+    cursor: pointer;
+    border: 1px solid #fcfcfc; /* เพิ่ม border สีน้ำเงิน */
+    box-sizing: border-box; /* ทำให้ขนาดของกรอบเท่ากับขนาดของปุ่ม */
+}
+
+.bttn:hover {
+    background-color: #b97001;
+}
+
+.material-icons {
+    vertical-align: middle;
+    margin-right: 5px;
+}
+

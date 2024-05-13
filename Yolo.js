@@ -24,29 +24,64 @@ var infer = function() {
 		};
 
 		$.ajax(settings).then(function(response) {
-			if(settings.format == "json") {
-				var pretty = $('<pre>');
-				var formatted = JSON.stringify(response, null, 4)
+    if (settings.format == "json") {
+        var partialResponse;
+        if (response.predictions[0].class === "canker") {
+            // สร้างอ็อบเจ็กต์ JSON สำหรับ class "canker" เท่านั้น
+            partialResponse = {
+                // กำหนดเฉพาะ key ที่ต้องการแสดงข้อมูล
+                "class": response.predictions[0].class,
+                "links": {
+                    "canker": "<a href='canker.html'>กด -> วิธีรักษา</a>"
+                }
+            };
+        } else if (response.predictions[0].class === "greening") {
+            partialResponse = {
+                "class": response.predictions[0].class,
+                "links": {
+                    "greening": "<a href='greening.html'>กด -> วิธีรักษา</a>"
+                }
+            };
+        } else if (response.predictions[0].class === "blackspot") {
+            partialResponse = {
+                "class": response.predictions[0].class,
+                "links": {
+                    "blackspot": "<a href='blackspot.html'>กด -> วิธีรักษา</a>"
+                }
+            };
+        } else {
+            partialResponse = {
+                "class": response.predictions[0].class,
+                "links": {
+                    "melanose": "<a href='melanose.html'>กด -> วิธีรักษา</a>"
+                }
+            };
+        }
 
-				pretty.html(formatted);
-				$('#output').html("").append(pretty);
-				$('html').scrollTop(100000);
-			} else {
-				var arrayBufferView = new Uint8Array(response);
-				var blob = new Blob([arrayBufferView], {
-					'type': 'image\/jpeg'
-				});
-				var base64image = window.URL.createObjectURL(blob);
+        var pretty = $('<pre>');
+        var formatted = JSON.stringify(partialResponse, null, 4);
 
-				var img = $('<img/>');
-				img.get(0).onload = function() {
-					$('html').scrollTop(100000);
-				};
-				img.attr('src', base64image);
-				$('#output').html("").append(img);
-			}
-		});
-	});
+        pretty.html(formatted);
+        $('#output').html("").append(pretty);
+        $('html').scrollTop(100000);
+		
+    } else {
+        var arrayBufferView = new Uint8Array(response);
+        var blob = new Blob([arrayBufferView], {
+            'type': 'image\/jpeg'
+        });
+        var base64image = window.URL.createObjectURL(blob);
+
+        var img = $('<img/>');
+        img.get(0).onload = function() {
+            $('html').scrollTop(100000);
+        };
+        img.attr('src', base64image);
+        $('#output').html("").append(img);
+    }
+});
+
+});
 };
 
 var retrieveDefaultValuesFromLocalStorage = function() {

@@ -15,7 +15,7 @@
 		
 
     </style>
-
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
 	<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&amp;display=swap" rel="stylesheet">
 	<link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous">
 	<link href="/infer.css" rel="stylesheet"></head>
@@ -47,12 +47,12 @@
 
 			<!-- กล้อง -->
             <div class="col-12-s6-m4" id="method">
-                <label class="input__label">Real Time</label>
+                <label class="input__label"></label>
                 <div>
 					<!-- display none ได้ -->
                     <button data-value="upload" id="computerButton" class="bttn left fill active" style="display: none;">Upload</button> 			
 					
-                    <button data-value="url" id="goToHTML2" class="bttn right fill">เปิดกล้อง</button>
+                    <!-- <button data-value="url" id="goToHTML2" class="bttn right fill">เปิดกล้อง</button> -->
                 </div>
             </div>
 			<!-- แกล -->
@@ -61,7 +61,14 @@
                 <div class="flex">
 					<!-- display none ได้ -->
                     <input class="input input--left flex-1" type="text" id="fileName" disabled="" style="display: none;">
-                    <button id="fileMock" class="bttn right active mb-4">เปิดแกลลอรี่</button>
+                    <!-- ใช้ Material Icons โดยให้เปลี่ยนชื่อ icon ตามที่ต้องการ -->
+					<button id="fileMock" class="bttn right active mb-4">
+						<i class="material-symbols-outlined">photo_library</i> <!-- ใส่ icon ของแกลลอรี่ -->
+					</button>
+					<button data-value="url" id="goToHTML2" class="bttn right fill">
+						<i class="material-symbols-outlined">camera_alt</i> <!-- ใส่ icon ของกล้อง -->
+					</button>
+
                 </div>
                 <input style="display: none;" type="file" id="file">
             </div>
@@ -115,6 +122,8 @@
                 <h3 class="headline"></h3>
             </div>
             <pre id="output" class="codeblock"></pre>
+			<pre id="image" class="codeblock"></pre>
+
         </div>
 
 
@@ -135,81 +144,80 @@ $(function() {
 });
 
 var infer = function() {
-	$('#output').html("โปรดรอซักครู่ ระบบกำลังตรวจสอบ..");
-	$("#resultContainer").show();
-	$('html').scrollTop(100000);
+    $('#output').html("โปรดรอซักครู่ ระบบกำลังตรวจสอบ..");
+    $("#resultContainer").show();
+    $('html').scrollTop(100000);
 
-	getSettingsFromForm(function(settings) {
-		settings.error = function(xhr) {
-			$('#output').html("").append([
-				"Error loading response.",
-				"",
-				"Check your API key, model, version,",
-				"and other parameters",
-				"then try again."
-			].join("\n"));
-		};
-
-		$.ajax(settings).then(function(response) {
-    if (settings.format == "json") {
-        var partialResponse;
-        if (response.predictions[0].class === "canker") {
-            // สร้างอ็อบเจ็กต์ JSON สำหรับ class "canker" เท่านั้น
-            partialResponse = {
-                // กำหนดเฉพาะ key ที่ต้องการแสดงข้อมูล
-                "class": response.predictions[0].class,
-                "links": {
-                    "canker": "<a href='canker.html'>กด -> วิธีรักษา</a>"
-                }
-            };
-        } else if (response.predictions[0].class === "greening") {
-            partialResponse = {
-                "class": response.predictions[0].class,
-                "links": {
-                    "greening": "<a href='greening.html'>กด -> วิธีรักษา</a>"
-                }
-            };
-        } else if (response.predictions[0].class === "blackspot") {
-            partialResponse = {
-                "class": response.predictions[0].class,
-                "links": {
-                    "blackspot": "<a href='blackspot.html'>กด -> วิธีรักษา</a>"
-                }
-            };
-        } else {
-            partialResponse = {
-                "class": response.predictions[0].class,
-                "links": {
-                    "melanose": "<a href='melanose.html'>กด -> วิธีรักษา</a>"
-                }
-            };
-        }
-
-        var pretty = $('<pre>');
-        var formatted = JSON.stringify(partialResponse, null, 4);
-
-        pretty.html(formatted);
-        $('#output').html("").append(pretty);
-        $('html').scrollTop(100000);
-		
-    } else {
-        var arrayBufferView = new Uint8Array(response);
-        var blob = new Blob([arrayBufferView], {
-            'type': 'image\/jpeg'
-        });
-        var base64image = window.URL.createObjectURL(blob);
-
-        var img = $('<img/>');
-        img.get(0).onload = function() {
-            $('html').scrollTop(100000);
+    getSettingsFromForm(function(settings) {
+        settings.error = function(xhr) {
+            $('#output').html("").append([
+                "Error loading response.",
+                "",
+                "Check your API key, model, version,",
+                "and other parameters",
+                "then try again."
+            ].join("\n"));
         };
-        img.attr('src', base64image);
-        $('#output').html("").append(img);
-    }
-});
 
-});
+        $.ajax(settings).then(function(response) {
+            if (settings.format == "json") {
+                var partialResponse;
+                if (response.predictions[0].class === "canker") {
+                    partialResponse = {
+                        "class": response.predictions[0].class,
+                        "links": {
+                            "canker": "<a href='canker.html' class='btn-link'>กด -> วิธีรักษา</a>"
+                        }
+                    };
+                } else if (response.predictions[0].class === "greening") {
+                    partialResponse = {
+                        "class": response.predictions[0].class,
+                        "links": {
+                            "greening": "<a href='greening.html' class='btn-link'>กด -> วิธีรักษา</a>"
+                        }
+                    };
+                } else if (response.predictions[0].class === "blackspot") {
+                    partialResponse = {
+                        "class": response.predictions[0].class,
+                        "links": {
+                            "blackspot": "<a href='blackspot.html' class='btn-link'>กด -> วิธีรักษา</a>"
+                        }
+                    };
+                } else {
+                    partialResponse = {
+                        "class": response.predictions[0].class,
+                        "links": {
+                            "melanose": "<a href='melanose.html' class='btn-link'>กด -> วิธีรักษา</a>"
+                        }
+                    };
+                }
+
+                var pretty = $('<pre>');
+                var formatted = JSON.stringify(partialResponse, null, 4);
+
+                pretty.html(formatted);
+                $('#output').html("").append(pretty);
+                $('html').scrollTop(100000);
+            } else {
+                var arrayBufferView = new Uint8Array(response);
+                var blob = new Blob([arrayBufferView], {
+                    'type': 'image/jpeg'
+                });
+                var base64image = window.URL.createObjectURL(blob);
+
+                var img = $('<img/>');
+                img.get(0).onload = function() {
+                    $('html').scrollTop(100000);
+                };
+                img.attr('src', base64image);
+                $('#output').html("").append(pretty);
+                $('#image').html("").append(img);
+                $('html').scrollTop(100000);
+            }
+        });
+    });
 };
+
 
 var retrieveDefaultValuesFromLocalStorage = function() {
 	try {

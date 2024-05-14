@@ -96,13 +96,13 @@
 			</div>
 			
 
-				<div class="col-6-m3" id="format">	
+				<!-- <div class="col-6-m3" id="format">	
 					<label class="input__label"></label>
 					<div>
 						<button id="imageButton" data-value="image" class="bttn right active mb-4" style="display: none;">รูปภาพ</button>
 						<button id="jsonButton" data-value="json" class="bttn right active mb-4" style="display: none;">ข้อมูลโรค</button>
 					</div>
-				</div>
+				</div> -->
 				
 			<!-- submit btn -->
 			<div class="col-12">
@@ -142,7 +142,63 @@ var infer = function() {
     $("#resultContainer").show();
     $('html').scrollTop(100000);
 
-    getSettingsFromForm(function(settings) {
+    var partialResponse = [];
+    var encounteredDiseases = {}; // Object to keep track of encountered diseases
+
+    var handleJSONResponse = function(response) {
+        response.predictions.forEach(function(prediction) {
+            var link;
+            if (prediction.class === "canker" && !encounteredDiseases["canker"]) {
+                link = "<a href='canker.html' class='btn-link'>วิธีรักษา</a>";
+                encounteredDiseases["canker"] = true; // Mark canker as encountered
+            } else if (prediction.class === "greening" && !encounteredDiseases["greening"]) {
+                link = "<a href='greening.html' class='btn-link'>วิธีรักษา</a>";
+                encounteredDiseases["greening"] = true; // Mark greening as encountered
+            } else if (prediction.class === "blackspot" && !encounteredDiseases["blackspot"]) {
+                link = "<a href='blackspot.html' class='btn-link'>วิธีรักษา</a>";
+                encounteredDiseases["blackspot"] = true; // Mark blackspot as encountered
+            } else if (!encounteredDiseases["melanose"]) {
+                link = "<a href='melanose.html' class='btn-link'>วิธีรักษา</a>";
+                encounteredDiseases["melanose"] = true; // Mark melanose as encountered
+            } else {
+                // Skip duplicate diseases
+                return;
+            }
+            
+            partialResponse.push({
+                "พบโรค": prediction.class + "  " + link
+            });
+        });
+
+        var pretty = $('<pre>');
+        var formatted = JSON.stringify(partialResponse, null, 4);
+        formatted = formatted.replace(/\[/g, '&#160;').replace(/\]/g, '&#160;');
+        formatted = formatted.replace(/"/g, '&#160;').replace(/"/g, '&#160;');
+        formatted = formatted.replace(/,/g, '&#160;').replace(/,/g, '&#160;');
+        formatted = formatted.replace(/{/g, '&#160;').replace(/}/g, '&#160;');
+
+        pretty.html(formatted);
+        $('#output').html("").append(pretty);
+        $('html').scrollTop(100000);
+    };
+
+    var handleImageResponse = function(response) {
+        var arrayBufferView = new Uint8Array(response);
+        var blob = new Blob([arrayBufferView], {
+            'type': 'image/jpeg'
+        });
+        var base64image = window.URL.createObjectURL(blob);
+
+        var img = $('<img/>');
+        img.get(0).onload = function() {
+            $('html').scrollTop(100000);
+        };
+        img.attr('src', base64image);
+        $('#image').html("").append(img);
+        $('html').scrollTop(100000);
+    };
+
+    getSettingsFromFormJSON(function(settings) {
         settings.error = function(xhr) {
             $('#output').html("").append([
                 "Error loading response.",
@@ -154,65 +210,31 @@ var infer = function() {
         };
 
         $.ajax(settings).then(function(response) {
-			if (settings.format == "json") {
-    var partialResponse = [];
-    var encounteredDiseases = {}; // Object to keep track of encountered diseases
-
-    response.predictions.forEach(function(prediction) {
-        var link;
-        if (prediction.class === "canker" && !encounteredDiseases["canker"]) {
-            link = "<a href='canker.html' class='btn-link'>วิธีรักษา</a>";
-            encounteredDiseases["canker"] = true; // Mark canker as encountered
-        } else if (prediction.class === "greening" && !encounteredDiseases["greening"]) {
-            link = "<a href='greening.html' class='btn-link'>วิธีรักษา</a>";
-            encounteredDiseases["greening"] = true; // Mark greening as encountered
-        } else if (prediction.class === "blackspot" && !encounteredDiseases["blackspot"]) {
-            link = "<a href='blackspot.html' class='btn-link'>วิธีรักษา</a>";
-            encounteredDiseases["blackspot"] = true; // Mark blackspot as encountered
-        } else if (!encounteredDiseases["melanose"]) {
-            link = "<a href='melanose.html' class='btn-link'>วิธีรักษา</a>";
-            encounteredDiseases["melanose"] = true; // Mark melanose as encountered
-        } else {
-            // Skip duplicate diseases
-            return;
-        }
-        
-        partialResponse.push({
-            "พบโรค": prediction.class + "  " + link
+            if (settings.format == "json") {
+                handleJSONResponse(response);
+            }
         });
     });
 
-    var pretty = $('<pre>');
-    var formatted = JSON.stringify(partialResponse, null, 4);
-    formatted = formatted.replace(/\[/g, '&#160;').replace(/\]/g, '&#160;');
-    formatted = formatted.replace(/"/g, '&#160;').replace(/"/g, '&#160;');
-    formatted = formatted.replace(/,/g, '&#160;').replace(/,/g, '&#160;');
-    formatted = formatted.replace(/{/g, '&#160;').replace(/}/g, '&#160;');
+    getSettingsFromFormImage(function(settings) {
+        settings.error = function(xhr) {
+            $('#output').html("").append([
+                "Error loading response.",
+                "",
+                "Check your API key, model, version,",
+                "and other parameters",
+                "then try again."
+            ].join("\n"));
+        };
 
-    pretty.html(formatted);
-    $('#output').html("").append(pretty);
-    $('html').scrollTop(100000);
-}
-
-			else {
-                var arrayBufferView = new Uint8Array(response);
-                var blob = new Blob([arrayBufferView], {
-                    'type': 'image/jpeg'
-                });
-                var base64image = window.URL.createObjectURL(blob);
-
-                var img = $('<img/>');
-                img.get(0).onload = function() {
-                    $('html').scrollTop(100000);
-                };
-                img.attr('src', base64image);
-                $('#output').html("").append(pretty);
-                $('#image').html("").append(img);
-                $('html').scrollTop(100000);
+        $.ajax(settings).then(function(response) {
+            if (settings.format == "image") {
+                handleImageResponse(response);
             }
         });
     });
 };
+
 
 
 var retrieveDefaultValuesFromLocalStorage = function() {
@@ -282,7 +304,61 @@ var setupButtonListeners = function() {
 	});
 };
 
-var getSettingsFromForm = function(cb) {
+// var getSettingsFromForm = function(cb) {
+// 	var settings = {
+// 		method: "POST",
+// 	};
+
+// 	var parts = [
+// 		"https://detect.roboflow.com/",
+// 		$('#model').val(),
+// 		"/",
+// 		$('#version').val(),
+// 		"?api_key=" + $('#api_key').val()
+// 	];
+
+// 	var classes = $('#classes').val();
+// 	if(classes) parts.push("&classes=" + classes);
+
+// 	var confidence = $('#confidence').val();
+// 	if(confidence) parts.push("&confidence=" + confidence);
+
+// 	var overlap = $('#overlap').val();
+// 	if(overlap) parts.push("&overlap=" + overlap);
+
+// 	var format = $('#format .active').attr('data-value');
+// 	parts.push("&format=" + format);
+// 	settings.format = format;
+
+// 	if(format == "image") {
+// 		var labels = $('#labels .active').attr('data-value');
+// 		if(labels) parts.push("&labels=on");
+
+// 		var stroke = $('#stroke .active').attr('data-value');
+// 		if(stroke) parts.push("&stroke=" + stroke);
+
+// 		settings.xhr = function() {
+// 			var override = new XMLHttpRequest();
+// 			override.responseType = 'arraybuffer';
+// 			return override;
+// 		}
+// 	}
+
+// 	var method = $('#method .active').attr('data-value');
+// 	if(method == "upload") {
+// 		var file = $('#file').get(0).files && $('#file').get(0).files.item(0);
+// 		if(!file) return alert("Please select a file.");
+
+// 		getBase64fromFile(file).then(function(base64image) {
+// 			settings.url = parts.join("");
+// 			settings.data = base64image;
+
+// 			console.log(settings);
+// 			cb(settings);
+// 		});
+// 	} 
+// };
+var getSettingsFromFormJSON = function(cb) {
 	var settings = {
 		method: "POST",
 	};
@@ -303,9 +379,8 @@ var getSettingsFromForm = function(cb) {
 
 	var overlap = $('#overlap').val();
 	if(overlap) parts.push("&overlap=" + overlap);
-
-	var format = $('#format .active').attr('data-value');
-	parts.push("&format=" + format);
+    var format = "json"; // Set format to "json"
+    parts.push("&format=" + format);
 	settings.format = format;
 
 	if(format == "image") {
@@ -336,6 +411,60 @@ var getSettingsFromForm = function(cb) {
 		});
 	} 
 };
+var getSettingsFromFormImage = function(cb) {
+	var settings = {
+		method: "POST",
+	};
+
+	var parts = [
+		"https://detect.roboflow.com/",
+		$('#model').val(),
+		"/",
+		$('#version').val(),
+		"?api_key=" + $('#api_key').val()
+	];
+
+	var classes = $('#classes').val();
+	if(classes) parts.push("&classes=" + classes);
+
+	var confidence = $('#confidence').val();
+	if(confidence) parts.push("&confidence=" + confidence);
+
+	var overlap = $('#overlap').val();
+	if(overlap) parts.push("&overlap=" + overlap);
+    var format = "image"; // Set format to "json"
+    parts.push("&format=" + format);
+	settings.format = format;
+
+	if(format == "image") {
+		var labels = $('#labels .active').attr('data-value');
+		if(labels) parts.push("&labels=on");
+
+		var stroke = $('#stroke .active').attr('data-value');
+		if(stroke) parts.push("&stroke=" + stroke);
+
+		settings.xhr = function() {
+			var override = new XMLHttpRequest();
+			override.responseType = 'arraybuffer';
+			return override;
+		}
+	}
+
+	var method = $('#method .active').attr('data-value');
+	if(method == "upload") {
+		var file = $('#file').get(0).files && $('#file').get(0).files.item(0);
+		if(!file) return alert("Please select a file.");
+
+		getBase64fromFile(file).then(function(base64image) {
+			settings.url = parts.join("");
+			settings.data = base64image;
+
+			console.log(settings);
+			cb(settings);
+		});
+	} 
+};
+
 
 var getBase64fromFile = function(file) {
 	return new Promise(function(resolve, reject) {

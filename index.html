@@ -168,22 +168,22 @@ var infer = function() {
                 var partialResponse;
                 if (response.predictions[0].class === "canker") {
                     partialResponse = {
-                        "วินิฉัยว่าเป็นโรค": response.predictions[0].class +" " +"<a href='canker.html' class='btn-link'>วิธีรักษา</a>"
+                        "พบโรค": response.predictions[0].class +"  " +"<a href='canker.html' class='btn-link'>วิธีรักษา</a>"
                         
                     };
                 } else if (response.predictions[0].class === "greening") {
                     partialResponse = {
-                        "วินิฉัยว่าเป็นโรค": response.predictions[0].class+" " +"<a href='greening.html' class='btn-link'>วิธีรักษา</a>"
+                        "พบโรค": response.predictions[0].class+"  " +"<a href='greening.html' class='btn-link'>วิธีรักษา</a>"
                         
                     };
                 } else if (response.predictions[0].class === "blackspot") {
                     partialResponse = {
-                        "วินิฉัยว่าเป็นโรค": response.predictions[0].class+" " +"<a href='blackspot.html' class='btn-link'>วิธีรักษา</a>"
+                        "พบโรค": response.predictions[0].class+"  " +"<a href='blackspot.html' class='btn-link'>วิธีรักษา</a>"
                         
                     };
                 } else {
                     partialResponse = {
-                        "วินิฉัยว่าเป็นโรค": response.predictions[0].class+" " + "<a href='melanose.html' class='btn-link'>วิธีรักษา</a>"
+                        "พบโรค": response.predictions[0].class+"  " + "<a href='melanose.html' class='btn-link'>วิธีรักษา</a>"
                         
                     };
                 }

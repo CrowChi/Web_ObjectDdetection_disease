@@ -125,8 +125,8 @@
             <div class="result__header">
                 <h3 class="headline"></h3>
             </div>
-            <pre id="output" class="codeblock"></pre>
-			<pre id="image" class="codeblock"></pre>
+            <pre id="output" ></pre>
+			<pre id="image" ></pre>
 
         </div>
 
@@ -148,7 +148,7 @@ $(function() {
 });
 
 var infer = function() {
-    $('#output').html("โปรดรอซักครู่ ระบบกำลังตรวจสอบ..");
+    $('#output').html("");
     $("#resultContainer").show();
     $('html').scrollTop(100000);
 
@@ -168,32 +168,33 @@ var infer = function() {
                 var partialResponse;
                 if (response.predictions[0].class === "canker") {
                     partialResponse = {
-                        "วินิฉัยว่าเป็นโรค": response.predictions[0].class,
-                        "รายละเอียดเกี่ยวกับโรค": "<a href='canker.html' class='btn-link'>กดลิงก์</a>"
+                        "วินิฉัยว่าเป็นโรค": response.predictions[0].class +" " +"<a href='canker.html' class='btn-link'>วิธีรักษา</a>"
                         
                     };
                 } else if (response.predictions[0].class === "greening") {
                     partialResponse = {
-                        "วินิฉัยว่าเป็นโรค": response.predictions[0].class,
-                        "รายละเอียดเกี่ยวกับโรค": "<a href='greening.html' class='btn-link'>กดลิงก์</a>"
+                        "วินิฉัยว่าเป็นโรค": response.predictions[0].class+" " +"<a href='greening.html' class='btn-link'>วิธีรักษา</a>"
                         
                     };
                 } else if (response.predictions[0].class === "blackspot") {
                     partialResponse = {
-                        "วินิฉัยว่าเป็นโรค": response.predictions[0].class,
-                        "รายละเอียดเกี่ยวกับโรค": "<a href='blackspot.html' class='btn-link'>กดลิงก์</a>"
+                        "วินิฉัยว่าเป็นโรค": response.predictions[0].class+" " +"<a href='blackspot.html' class='btn-link'>วิธีรักษา</a>"
                         
                     };
                 } else {
                     partialResponse = {
-                        "วินิฉัยว่าเป็นโรค": response.predictions[0].class,
-                        "รายละเอียดเกี่ยวกับโรค": "<a href='melanose.html' class='btn-link'>กดลิงก์</a>"
+                        "วินิฉัยว่าเป็นโรค": response.predictions[0].class+" " + "<a href='melanose.html' class='btn-link'>วิธีรักษา</a>"
                         
                     };
                 }
 
                 var pretty = $('<pre>');
                 var formatted = JSON.stringify(partialResponse, null, 4);
+
+				formatted = formatted.replace(/"/g, '&#160;').replace(/"/g, '&#160;');
+				formatted = formatted.replace(/,/g, '&#160;').replace(/,/g, '&#160;');
+				formatted = formatted.replace(/{/g, '&#160;').replace(/}/g, '&#160;');
+
 
                 pretty.html(formatted);
                 $('#output').html("").append(pretty);
@@ -464,6 +465,9 @@ const button = document.getElementById('goToHTML2');
     }
 	function showDiseaseInfo2() {
         document.getElementById("jsonButton").style.display = "none";
+    }
+	function showDiseaseInfo3() {
+        document.querySelector('form').submit();
     }
 </script>
 

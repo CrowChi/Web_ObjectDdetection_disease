@@ -53,7 +53,6 @@
 					<!-- display none ได้ -->
                     <button data-value="upload" id="computerButton" class="bttn left fill active" style="display: none;">Upload</button> 			
 					
-                    <!-- <button data-value="url" id="goToHTML2" class="bttn right fill">เปิดกล้อง</button> -->
                 </div>
             </div>
 
@@ -92,15 +91,7 @@
 							<button data-value="on" class="bttn right active">On</button>
 						</div>
 					</div>
-					<div class="col-12-s6-m4" id="stroke">
-						<label class="input__label">Stroke Width</label>
-						<div>
-							<button data-value="1" class="bttn left">1px</button>
-							<button data-value="2" class="bttn active">2px</button>
-							<button data-value="5" class="bttn">5px</button>
-							<button data-value="10" class="bttn right">10px</button>
-						</div>
-					</div>
+					
 				</div>
 			</div>
 			
@@ -132,9 +123,6 @@
 
         </div>
 
-
-
-		
     </div>
 	</center>
 </form>
@@ -166,37 +154,46 @@ var infer = function() {
         };
 
         $.ajax(settings).then(function(response) {
-    if (settings.format == "json") {
-        var partialResponse = [];
+			if (settings.format == "json") {
+    var partialResponse = [];
+    var encounteredDiseases = {}; // Object to keep track of encountered diseases
+
+    response.predictions.forEach(function(prediction) {
+        var link;
+        if (prediction.class === "canker" && !encounteredDiseases["canker"]) {
+            link = "<a href='canker.html' class='btn-link'>วิธีรักษา</a>";
+            encounteredDiseases["canker"] = true; // Mark canker as encountered
+        } else if (prediction.class === "greening" && !encounteredDiseases["greening"]) {
+            link = "<a href='greening.html' class='btn-link'>วิธีรักษา</a>";
+            encounteredDiseases["greening"] = true; // Mark greening as encountered
+        } else if (prediction.class === "blackspot" && !encounteredDiseases["blackspot"]) {
+            link = "<a href='blackspot.html' class='btn-link'>วิธีรักษา</a>";
+            encounteredDiseases["blackspot"] = true; // Mark blackspot as encountered
+        } else if (!encounteredDiseases["melanose"]) {
+            link = "<a href='melanose.html' class='btn-link'>วิธีรักษา</a>";
+            encounteredDiseases["melanose"] = true; // Mark melanose as encountered
+        } else {
+            // Skip duplicate diseases
+            return;
+        }
         
-        response.predictions.forEach(function(prediction) {
-            var link;
-            if (prediction.class === "canker") {
-                link = "<a href='canker.html' class='btn-link'>วิธีรักษา</a>";
-            } else if (prediction.class === "greening") {
-                link = "<a href='greening.html' class='btn-link'>วิธีรักษา</a>";
-            } else if (prediction.class === "blackspot") {
-                link = "<a href='blackspot.html' class='btn-link'>วิธีรักษา</a>";
-            } else {
-                link = "<a href='melanose.html' class='btn-link'>วิธีรักษา</a>";
-            }
-            
-            partialResponse.push({
-                "พบโรค": prediction.class + "  " + link
-            });
+        partialResponse.push({
+            "พบโรค": prediction.class + "  " + link
         });
+    });
 
-        var pretty = $('<pre>');
-        var formatted = JSON.stringify(partialResponse, null, 4);
-		formatted = formatted.replace(/\[/g, '&#160;').replace(/\]/g, '&#160;');
-        formatted = formatted.replace(/"/g, '&#160;').replace(/"/g, '&#160;');
-        formatted = formatted.replace(/,/g, '&#160;').replace(/,/g, '&#160;');
-        formatted = formatted.replace(/{/g, '&#160;').replace(/}/g, '&#160;');
+    var pretty = $('<pre>');
+    var formatted = JSON.stringify(partialResponse, null, 4);
+    formatted = formatted.replace(/\[/g, '&#160;').replace(/\]/g, '&#160;');
+    formatted = formatted.replace(/"/g, '&#160;').replace(/"/g, '&#160;');
+    formatted = formatted.replace(/,/g, '&#160;').replace(/,/g, '&#160;');
+    formatted = formatted.replace(/{/g, '&#160;').replace(/}/g, '&#160;');
 
-        pretty.html(formatted);
-        $('#output').html("").append(pretty);
-        $('html').scrollTop(100000);
-    } 
+    pretty.html(formatted);
+    $('#output').html("").append(pretty);
+    $('html').scrollTop(100000);
+}
+
 			else {
                 var arrayBufferView = new Uint8Array(response);
                 var blob = new Blob([arrayBufferView], {

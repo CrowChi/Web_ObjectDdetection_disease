@@ -393,7 +393,7 @@ b.card {
   object-fit: cover;
   height: 100px;
   width: 100px;
-  border-radius: 4px 0 0 4px;
+  border-radius: 6px 6px 6px 6px;
 }
 
 .card-body {

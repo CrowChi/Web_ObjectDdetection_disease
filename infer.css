@@ -392,7 +392,7 @@ b.card {
 .card img {
   object-fit: cover;
   height: 100px;
-  width: 100%;
+  width: 100px;
   border-radius: 4px 0 0 4px;
 }
 
@@ -440,4 +440,9 @@ b.card {
     font-size: 0.9rem; 
   }
 }
-
+.img-fluid rounded-start{
+  object-fit: cover;
+  height: 100px;
+  width: 100px;
+  border-radius: 4px 0 0 4px;
+}

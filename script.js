@@ -23,9 +23,9 @@ $(function () {
             });
         });
 
-    var publishable_key = "rf_pBt50EUI1WVZI5xZ5qpljM5nDLL2";
+    var publishable_key = "aSUmoVIJnEGHJZJGpC2N";
     var toLoad = {
-        model: "dts-test-project-som",
+        model: "cirtus-u4glb",
         version: 3
     };
 

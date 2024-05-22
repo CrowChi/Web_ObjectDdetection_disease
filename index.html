@@ -165,19 +165,19 @@ var infer = function() {
         var imageSrc;
 
         if (prediction.class === "canker" && !encounteredDiseases["canker"]) {
-            imageSrc = "https://cdn.discordapp.com/attachments/1134060991857045544/1239988998634475530/LINE_ALBUM_2022.12.4__1_230705_248.jpg?ex=6644ed3f&is=66439bbf&hm=0c86b87e53add276a583cd393f0944fb73dbaa87ec218ddbe594134f8ee31aad&";
+            imageSrc = "https://cdn.discordapp.com/attachments/1134060991857045544/1239988998634475530/LINE_ALBUM_2022.12.4__1_230705_248.jpg?ex=664ed07f&is=664d7eff&hm=1c2074fc64b33094a97123b6c690b8887fd3d56c675819b48de29302d1c1dd88&";
             link = "canker.html";
             encounteredDiseases["canker"] = true; // Mark canker as encountered
         } else if (prediction.class === "greening" && !encounteredDiseases["greening"]) {
-            imageSrc = "https://cdn.discordapp.com/attachments/1134060991857045544/1239987682227126343/image.png?ex=6644ec05&is=66439a85&hm=f22fcc09878df89ce85e78e4063c0e388e24e2ba625ef5ade7934868340515cc&";
+            imageSrc = "https://cdn.discordapp.com/attachments/1134060991857045544/1239987682227126343/image.png?ex=664ecf45&is=664d7dc5&hm=a4ecfa56b1fd41ce3ce4380ef925ab0599f4a36478689ae46b5c00fc84e7a92a&";
             link = "greening.html";
             encounteredDiseases["greening"] = true; // Mark greening as encountered
         } else if (prediction.class === "blackspot" && !encounteredDiseases["blackspot"]) {
-            imageSrc = "https://cdn.discordapp.com/attachments/1134060991857045544/1239988220318584852/LINE_ALBUM_2022.12.4__1_230705_70.jpg?ex=6644ec85&is=66439b05&hm=3ad6e0f456db8568765d4b05c5237c6cb74a602c78fc574676883d49848b834f&";
+            imageSrc = "https://cdn.discordapp.com/attachments/1134060991857045544/1239988220318584852/LINE_ALBUM_2022.12.4__1_230705_70.jpg?ex=664ecfc5&is=664d7e45&hm=787b2d0c08a42db33a19f410804541e59391b606d320f96f15628f32b53e0d44&";
             link = "blackspot.html";
             encounteredDiseases["blackspot"] = true; // Mark blackspot as encountered
         } else if (!encounteredDiseases[prediction.class.toLowerCase()]) {
-            imageSrc = "https://cdn.discordapp.com/attachments/1134060991857045544/1239988572514418849/LINE_ALBUM_2022.12.4__1_230705_27.jpg?ex=6644ecd9&is=66439b59&hm=bd6835512f02ada6c336f5f79a8b46c70e20aa8a63ef36dc5fa53c9089c8ede9&"; // Default image
+            imageSrc = "https://cdn.discordapp.com/attachments/1134060991857045544/1239988572514418849/LINE_ALBUM_2022.12.4__1_230705_27.jpg?ex=664ed019&is=664d7e99&hm=575e5afbefd52517f3db7b7bd6ef5ac6f8cb36f60ceaab511f2780ac09713f19&"; // Default image
             link = "melanose.html'";
             encounteredDiseases[prediction.class.toLowerCase()] = true; // Mark other diseases as encountered
         } else {

@@ -401,6 +401,8 @@ b.card {
   display: flex;
   flex-direction: column;
   justify-content: center;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* เพิ่มเงา */
+
 }
 
 .card-title {
@@ -430,6 +432,8 @@ b.card {
 
   .card-body {
     padding: 15px; 
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* เพิ่มเงา */
+
   }
 
   .card-title {

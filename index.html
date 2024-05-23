@@ -164,26 +164,34 @@ var infer = function() {
         var link;
         var imageSrc;
 
-        if (prediction.class === "canker" && !encounteredDiseases["canker"]) {
-            imageSrc = "https://cdn.discordapp.com/attachments/1134060991857045544/1239988998634475530/LINE_ALBUM_2022.12.4__1_230705_248.jpg?ex=664ed07f&is=664d7eff&hm=1c2074fc64b33094a97123b6c690b8887fd3d56c675819b48de29302d1c1dd88&";
-            link = "canker.html";
-            encounteredDiseases["canker"] = true; // Mark canker as encountered
-        } else if (prediction.class === "greening" && !encounteredDiseases["greening"]) {
-            imageSrc = "https://cdn.discordapp.com/attachments/1134060991857045544/1239987682227126343/image.png?ex=664ecf45&is=664d7dc5&hm=a4ecfa56b1fd41ce3ce4380ef925ab0599f4a36478689ae46b5c00fc84e7a92a&";
-            link = "greening.html";
-            encounteredDiseases["greening"] = true; // Mark greening as encountered
-        } else if (prediction.class === "blackspot" && !encounteredDiseases["blackspot"]) {
-            imageSrc = "https://cdn.discordapp.com/attachments/1134060991857045544/1239988220318584852/LINE_ALBUM_2022.12.4__1_230705_70.jpg?ex=664ecfc5&is=664d7e45&hm=787b2d0c08a42db33a19f410804541e59391b606d320f96f15628f32b53e0d44&";
-            link = "blackspot.html";
-            encounteredDiseases["blackspot"] = true; // Mark blackspot as encountered
-        } else if (!encounteredDiseases[prediction.class.toLowerCase()]) {
-            imageSrc = "https://cdn.discordapp.com/attachments/1134060991857045544/1239988572514418849/LINE_ALBUM_2022.12.4__1_230705_27.jpg?ex=664ed019&is=664d7e99&hm=575e5afbefd52517f3db7b7bd6ef5ac6f8cb36f60ceaab511f2780ac09713f19&"; // Default image
-            link = "melanose.html'";
-            encounteredDiseases[prediction.class.toLowerCase()] = true; // Mark other diseases as encountered
-        } else {
-            // Skip duplicate diseases
-            return;
-        }
+        function capitalizeFirstLetter(string) {
+    return string.charAt(0).toUpperCase() + string.slice(1);
+}
+
+// ใช้ฟังก์ชันเพื่อปรับให้ตัวอักษรแรกเป็นตัวพิมพ์ใหญ่
+prediction.class = capitalizeFirstLetter(prediction.class);
+
+// ตัวอย่างการใช้งานในตรรกะการทำนาย
+if (prediction.class === "Canker" && !encounteredDiseases["Canker"]) {
+    imageSrc = "https://cdn.discordapp.com/attachments/1134060991857045544/1239988998634475530/LINE_ALBUM_2022.12.4__1_230705_248.jpg?ex=664ed07f&is=664d7eff&hm=1c2074fc64b33094a97123b6c690b8887fd3d56c675819b48de29302d1c1dd88&";
+    link = "canker.html";
+    encounteredDiseases["Canker"] = true; // ทำเครื่องหมายว่า Canker ถูกพบแล้ว
+} else if (prediction.class === "Greening" && !encounteredDiseases["Greening"]) {
+    imageSrc = "https://cdn.discordapp.com/attachments/1134060991857045544/1239987682227126343/image.png?ex=664ecf45&is=664d7dc5&hm=a4ecfa56b1fd41ce3ce4380ef925ab0599f4a36478689ae46b5c00fc84e7a92a&";
+    link = "greening.html";
+    encounteredDiseases["Greening"] = true; // ทำเครื่องหมายว่า Greening ถูกพบแล้ว
+} else if (prediction.class === "Blackspot" && !encounteredDiseases["Blackspot"]) {
+    imageSrc = "https://cdn.discordapp.com/attachments/1134060991857045544/1239988220318584852/LINE_ALBUM_2022.12.4__1_230705_70.jpg?ex=664ecfc5&is=664d7e45&hm=787b2d0c08a42db33a19f410804541e59391b606d320f96f15628f32b53e0d44&";
+    link = "blackspot.html";
+    encounteredDiseases["Blackspot"] = true; // ทำเครื่องหมายว่า Blackspot ถูกพบแล้ว
+} else if (!encounteredDiseases[prediction.class]) {
+    imageSrc = "https://cdn.discordapp.com/attachments/1134060991857045544/1239988572514418849/LINE_ALBUM_2022.12.4__1_230705_27.jpg?ex=664ed019&is=664d7e99&hm=575e5afbefd52517f3db7b7bd6ef5ac6f8cb36f60ceaab511f2780ac09713f19&"; // รูปภาพเริ่มต้น
+    link = "melanose.html";
+    encounteredDiseases[prediction.class] = true; // ทำเครื่องหมายว่าโรคอื่น ๆ ถูกพบแล้ว
+} else {
+    // ข้ามโรคที่ซ้ำกัน
+    return;
+}
 
         // Create a new card for each prediction
 var cardHtml = `
@@ -418,7 +426,7 @@ var getSettingsFromFormJSON = function(cb) {
 		var labels = $('#labels .active').attr('data-value');
 		if(labels) parts.push("&labels=on");
 
-		var stroke = $('#stroke .active').attr('data-value');
+		var stroke = "10";
 		if(stroke) parts.push("&stroke=" + stroke);
 
 		settings.xhr = function() {
@@ -471,7 +479,7 @@ var getSettingsFromFormImage = function(cb) {
 		var labels = $('#labels .active').attr('data-value');
 		if(labels) parts.push("&labels=on");
 
-		var stroke = $('#stroke .active').attr('data-value');
+		var stroke = "10";
 		if(stroke) parts.push("&stroke=" + stroke);
 
 		settings.xhr = function() {

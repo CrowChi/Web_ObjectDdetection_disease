@@ -426,7 +426,7 @@ var getSettingsFromFormJSON = function(cb) {
 		var labels = $('#labels .active').attr('data-value');
 		if(labels) parts.push("&labels=on");
 
-		var stroke = "10";
+		var stroke = "5";
 		if(stroke) parts.push("&stroke=" + stroke);
 
 		settings.xhr = function() {
@@ -479,7 +479,7 @@ var getSettingsFromFormImage = function(cb) {
 		var labels = $('#labels .active').attr('data-value');
 		if(labels) parts.push("&labels=on");
 
-		var stroke = "10";
+		var stroke = "5";
 		if(stroke) parts.push("&stroke=" + stroke);
 
 		settings.xhr = function() {

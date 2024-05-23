@@ -23,7 +23,7 @@ $(function () {
             });
         });
 
-    var publishable_key = "aSUmoVIJnEGHJZJGpC2N";
+    var publishable_key = "rf_avU4f2ApheVqzEAplnri4rwFIa42";
     var toLoad = {
         model: "cirtus-u4glb",
         version: 3

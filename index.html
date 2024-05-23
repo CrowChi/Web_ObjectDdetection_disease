@@ -173,19 +173,19 @@ prediction.class = capitalizeFirstLetter(prediction.class);
 
 // ตัวอย่างการใช้งานในตรรกะการทำนาย
 if (prediction.class === "Canker" && !encounteredDiseases["Canker"]) {
-    imageSrc = "/image/canker1.jpg";
+    imageSrc = "https://github.com/CrowChi/Web_ObjectDdetection_disease/blob/main/image/canker1.jpg?raw=true";
     link = "canker.html";
     encounteredDiseases["Canker"] = true; // ทำเครื่องหมายว่า Canker ถูกพบแล้ว
 } else if (prediction.class === "Greening" && !encounteredDiseases["Greening"]) {
-    imageSrc = "/image/greening1.png";
+    imageSrc = "https://github.com/CrowChi/Web_ObjectDdetection_disease/blob/main/image/greening1.png?raw=true";
     link = "greening.html";
     encounteredDiseases["Greening"] = true; // ทำเครื่องหมายว่า Greening ถูกพบแล้ว
 } else if (prediction.class === "Blackspot" && !encounteredDiseases["Blackspot"]) {
-    imageSrc = "/image/black1.jpg";
+    imageSrc = "https://github.com/CrowChi/Web_ObjectDdetection_disease/blob/main/image/black1.jpg?raw=true";
     link = "blackspot.html";
     encounteredDiseases["Blackspot"] = true; // ทำเครื่องหมายว่า Blackspot ถูกพบแล้ว
 } else if (!encounteredDiseases[prediction.class]) {
-    imageSrc = "/image/melanose1.jpg"; // รูปภาพเริ่มต้น
+    imageSrc = "https://github.com/CrowChi/Web_ObjectDdetection_disease/blob/main/image/melanose1.jpg?raw=true"; // รูปภาพเริ่มต้น
     link = "melanose.html";
     encounteredDiseases[prediction.class] = true; // ทำเครื่องหมายว่าโรคอื่น ๆ ถูกพบแล้ว
 } else {

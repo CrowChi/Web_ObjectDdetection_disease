@@ -7,7 +7,7 @@
 ```
 >  นางสาว ธัญเรศ โอบอ้อม 
 >  นายภูวดล ผลชำนัญ
->   นายศักดิ์สิทธิ์ แสนชัย
+>  นายศักดิ์สิทธิ์ แสนชัย
 ```
 
 Link Train data : https://github.com/CrowChi/Orange_Disease_Detection_Model.

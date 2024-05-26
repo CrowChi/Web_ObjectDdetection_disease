@@ -10,4 +10,4 @@
 >  นายศักดิ์สิทธิ์   แสนชัย
 ```
 
-Link Train data : https://github.com/CrowChi/Orange_Disease_Detection_Model.
+:link: Link Train Data : https://github.com/CrowChi/Orange_Disease_Detection_Model.

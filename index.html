@@ -68,8 +68,7 @@
                 <label class="input__label" for="file">โหมดการใช้งาน</label>
                 <div class="flex">
 					<!-- display none ได้ -->
-                    <input class="input input--left flex-1" type="text" id="fileName" disabled="" style="display: none;">
-                    <!-- ใช้ Material Icons โดยให้เปลี่ยนชื่อ icon ตามที่ต้องการ -->
+
 					<button id="fileMock" class="bttn right active mb-3 button-spacing"onclick="showDiseaseInfo2()">
 						<i class="material-symbols-outlined">photo_library</i> <!-- ใส่ icon ของแกลลอรี่ -->
 					</button>
@@ -80,6 +79,9 @@
 					</button>
 
                 </div>
+				<div style="text-align: center;">
+					<input class="input input--left flex-1 button-spacing " type="text" id="fileName" disabled="" >
+				</div>
                 <input style="display: none;" type="file" id="file">
             </div>
 

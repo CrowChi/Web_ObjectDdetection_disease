@@ -80,7 +80,7 @@
 
                 </div>
 				<div style="display: flex; justify-content: center;">
-					<input class="input input--left flex-1 button-spacing" type="text" id="fileName" disabled="">
+					<input class="input input--left flex-1 button-spacing" type="text" id="fileName" disabled="" style="display: none;">
 				</div>
 				
                 <input style="display: none;" type="file" id="file">
@@ -563,7 +563,7 @@ const button = document.getElementById('goToHTML2');
 
     }
 	function showDiseaseInfo2() {
-        document.getElementById("jsonButton").style.display = "none";
+        document.getElementById("fileName").style.display = "block";
     }
 	function showDiseaseInfo3() {
         document.querySelector('form').submit();
